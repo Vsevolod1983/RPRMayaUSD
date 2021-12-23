@@ -1,0 +1,48 @@
+source "common.mel";
+
+global proc registerRprUsdRenderer()
+{
+	string $currentRendererName = getRPRUSDPluginName();
+
+	renderer -rendererUIName $currentRendererName
+			-renderProcedure "RprUsdRender"
+
+//			-renderRegionProcedure		 "mayaRenderRegion"
+//			-iprRenderProcedure         "fireRenderIprRender"
+//			-iprOptionsProcedure         "fireRenderIprOptionsWindow"
+//			-isRunningIprProcedure       "fireRenderIsRunningIpr"
+//			-startIprRenderProcedure     "fireRenderStartIprRender"
+//			-stopIprRenderProcedure      "fireRenderStopIprRender"
+//			-refreshIprRenderProcedure   "fireRenderRefreshIpr"
+//			-pauseIprRenderProcedure     "fireRenderPauseIprRender"
+//			-changeIprRegionProcedure    "fireRenderChangeIprRegion"
+//   		        -renderSequenceProcedure     "fireRenderSequence"
+//			-commandRenderProcedure      "fireRenderCmdlineRender"
+//			-batchRenderProcedure        "fireRenderBatchRender"
+//			-batchRenderOptionsStringProcedure        "fireRenderBatchRenderOptionsString"
+//			-showBatchRenderLogProcedure "fireRenderShowLog"
+//			-cancelBatchRenderProcedure  "batchRender"
+//			-showBatchRenderProcedure    "batchRender -showImage true"
+			-logoImageName              "amd.xpm"
+			RprUsdRender;
+
+	renderer -edit -addGlobalsNode "RprUsdGlobals" RprUsdRender;
+	renderer -edit -addGlobalsNode "defaultRenderGlobals" RprUsdRender;
+	renderer -edit -addGlobalsNode "defaultResolution" RprUsdRender;
+
+	renderer -edit -addGlobalsTab "Common" "createRprUsdRenderCommonGlobalsTab" "updateRprUsdRenderCommonGlobalsTab" RprUsdRender;
+
+	// These will update Attribute Editor when the selection is changed.
+	//scriptJob -event "SelectionChanged" "fireRenderUpdateAE";
+	//scriptJob -event "constructionHistoryChanged" "fireRenderUpdateAE";
+
+	// Ensure any saved IBL and Sky nodes are not linked to
+	// RPR globals, as this means that the RPR globals node
+	// is deleted if the IBL or Sky node is deleted.
+	// scriptJob -event "SceneOpened" cleanEnvironmentNodesRPR;
+
+	//fireRenderUpdateAE();
+
+	//overrideUnifiedRenderGlobalsWindow();
+}
+ 

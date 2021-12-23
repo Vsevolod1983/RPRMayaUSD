@@ -1,0 +1,7 @@
++ RPRUSD 0.1 %RPR_USD_PLUGIN_DEV_PATH%\Build
+PATH+:=bin
+icons: icons
+plug-ins: plug-ins
+presets: 
+scripts: scripts
+resources: 

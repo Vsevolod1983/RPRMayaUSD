@@ -1,0 +1,4 @@
+global proc string getRPRUSDPluginName()
+{
+	return "Radeon ProRender USD";
+}
