@@ -13,7 +13,7 @@ limitations under the License.
 
 #include "RprUsdProductionRenderCmd.h"
 
-MString RprUsdProductionRenderCmd::s_commandName = "RprUsdRender";
+MString RprUsdProductionRenderCmd::s_commandName = "rprUsdRender";
 
 
 // MPxCommand Implementation

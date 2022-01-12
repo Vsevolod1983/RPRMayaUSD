@@ -5,7 +5,7 @@ global proc registerRprUsdRenderer()
 	string $currentRendererName = getRPRUSDPluginName();
 
 	renderer -rendererUIName $currentRendererName
-			-renderProcedure "RprUsdRender"
+			-renderProcedure "rprUsdRenderCmd"
 
 //			-renderRegionProcedure		 "mayaRenderRegion"
 //			-iprRenderProcedure         "fireRenderIprRender"
@@ -30,19 +30,38 @@ global proc registerRprUsdRenderer()
 	renderer -edit -addGlobalsNode "defaultRenderGlobals" RprUsdRender;
 	renderer -edit -addGlobalsNode "defaultResolution" RprUsdRender;
 
-	renderer -edit -addGlobalsTab "Common" "createRprUsdRenderCommonGlobalsTab" "updateRprUsdRenderCommonGlobalsTab" RprUsdRender;
-
-	// These will update Attribute Editor when the selection is changed.
-	//scriptJob -event "SelectionChanged" "fireRenderUpdateAE";
-	//scriptJob -event "constructionHistoryChanged" "fireRenderUpdateAE";
-
-	// Ensure any saved IBL and Sky nodes are not linked to
-	// RPR globals, as this means that the RPR globals node
-	// is deleted if the IBL or Sky node is deleted.
-	// scriptJob -event "SceneOpened" cleanEnvironmentNodesRPR;
-
-	//fireRenderUpdateAE();
-
-	//overrideUnifiedRenderGlobalsWindow();
+	renderer -edit -addGlobalsTab "Common" "createMayaSoftwareCommonGlobalsTab" "updateMayaSoftwareCommonGlobalsTab" RprUsdRender;
+	renderer -edit -addGlobalsTab "General" "createRprUsdRenderGeneralTab" "updateRprUsdRenderGeneralTab" RprUsdRender;
 }
+
+global proc string rprUsdRenderCmd(int $resolution0, int $resolution1,
+								   int $doShadows, int $doGlowPass, string $camera, string $option)
+{
+	print(getRPRUSDPluginName() + " command " + $resolution0 + " " + $resolution1 + " " + $doShadows + " "+ $doGlowPass + " "+ $camera+ " "+  $option+"\n");
+	string $cmd = "rprUsdRender -w " + $resolution0 + " -h " + $resolution1 + " -cam " + $camera + " " + $option;
+	eval($cmd);
+	string $result = "";
+	return $result;
+}
+
+global proc createRprUsdRenderGeneralTab()
+{
+	scrollLayout
+		-horizontalScrollBarThickness 0
+		scrollLayout;
+
+	columnLayout
+		-adjustableColumn true
+		generalTabColumn;
+
+		text -label "Put controls here 1!";
+		text -label "Put controls here 2!";
+		text -label "Put controls here 3!";
+		text -label "Put controls here 4!";
+}
+
+global proc updateRprUsdRenderGeneralTab()
+{
+
+} 
  
